@@ -108,15 +108,32 @@ public class Obstacles extends Sprite{
         }
     }
 
-    public vop=id reAppear(int x, int y, boolean d, int sx){
-    
+    public void reAppear(int x, int y, boolean d, int sx){
+    speedX = x;
+    speedY = y;
+    destroyable =d;
+    this.setRefPixelPosition(sx, -HEIGHT);
+    this.setVisible(true);
+    appear = true;
     
     }
     
     
-    private void destroy() {
+    public void destroy() {
       super.setVisible(false);
       appear = false;
+    }
+    
+    public boolean isApear(){
+    return appear;
+    }
+
+    public static int getDamage() {
+        return damage;
+    }
+
+    public static int getScore() {
+        return score;
     }
     
     
