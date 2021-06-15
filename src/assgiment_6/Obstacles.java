@@ -119,7 +119,7 @@ public class Obstacles extends Sprite{
     }
     
     
-    private void destroy() {
+    public void destroy() {
       super.setVisible(false);
       appear = false;
     }
