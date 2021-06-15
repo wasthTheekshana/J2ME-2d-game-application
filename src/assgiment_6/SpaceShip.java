@@ -6,6 +6,7 @@
 
 package assgiment_6;
 
+import java.io.IOException;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.Sprite;
 
@@ -50,6 +51,84 @@ public class SpaceShip extends Sprite{
     }
     
     
-    public void initBullet
+    public void initBullet(Image image, int w,int h)throws IOException{
     
+        bullets =  new Bullets(image, w, h);
+    }
+    
+    public void advanced(int ticks){
+        if (ticks%RATE == 0) {
+            nextFrame();
+        }
+  
+    }
+       public void moveLeft () {
+        if (this.getRefPixelX()>0)
+            this.move(-speedX, 0);
+    }
+    
+    public void moveRight (int m) {
+        if (this.getRefPixelX() < m)
+            this.move(speedX, 0);
+    }
+
+    public void moveUp () {
+        if (this.getRefPixelY()>0)
+            this.move(0, -speedY);
+    }
+    
+    public void moveDown (int m) {
+        if (this.getRefPixelY()<m)
+            this.move(0, speedY);
+    }
+    
+    public Bullets fire(int ticks){
+    
+        if (ticks - fireTick > SHOOT_RATE) {
+            fireTick = ticks;
+            bullets.setSpeed(BULLET_SPEED);
+            bullets.shot(this.getRefPixelX(), this.getRefPixelY()+HEIGHT/2);
+            return bullets;
+        }else
+            return null;
+    
+    }
+    
+    public void collised(int ticks, int damage){
+    
+        if (!destroyed) {
+            if (ticks > damageTrick+DAMAGE_RATE) {
+                current_HP -= damage;
+                if (current_HP <= 0) {
+                    destroyed = true;
+                    damageTrick = ticks;
+                }
+            }
+        }
+    
+    }
+    
+    
+    public boolean isDetroyed(){
+    
+        return destroyed;
+    
+    }
+    
+    
+    public double getHPPrecentage(){
+    
+        if (!destroyed) {
+            return ((double)current_HP/(1.0*MAX_HP));
+        }else
+            return 0;
+    }
+    
+       public boolean isDamageable(int ticks) {
+        return (ticks > damageTrick + DAMAGE_RATE);
+    }
+    
+    public Bullets getBullet() {
+        return bullets;
+    }
 }
